@@ -1,0 +1,51 @@
+//
+//  {{ name }}View.swift
+//  {{ name }}
+//
+//  Created by {{ author }} on {{ date }}.
+//  Copyright © {{ year }} {{ company }}. All rights reserved.
+//
+
+import ComposableArchitecture
+import Perception
+import SwiftUI
+
+@Reducer
+public struct {{ name }}Feature {
+    public init() {}
+
+    @ObservableState
+    public struct State: Equatable {
+        public init() {}
+    }
+
+    public enum Action {}
+
+    public var body: some ReducerOf<Self> {
+        Reduce { _, action in
+            switch action {}
+        }
+    }
+}
+
+public struct {{ name }}View: View {
+    @Perception.Bindable var store: StoreOf<{{ name }}Feature>
+    
+    public init(store: StoreOf<{{ name }}Feature>) {
+        self.store = store
+    }
+
+    public var body: some View {
+        WithPerceptionTracking {
+            // Your view content here
+        }
+    }
+}
+
+#Preview {
+    WithPerceptionTracking {
+        {{ name }}View(store: Store(initialState: {{ name }}Feature.State()) {
+            {{ name }}Feature()
+        })
+    }
+}

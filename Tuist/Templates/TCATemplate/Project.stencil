@@ -1,0 +1,100 @@
+import ProjectDescription
+
+let project = Project(
+    name: "{{ name }}",
+    organizationName: "{{ company }}",
+    packages: [
+        .remote(url: "https://github.com/pointfreeco/swift-composable-architecture", requirement: .upToNextMajor(from: "1.19.1")),
+        .remote(url: "https://github.com/pointfreeco/swift-perception", requirement: .upToNextMajor(from: "1.6.0")),
+        .remote(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", requirement: .upToNextMajor(from: "1.5.2")),
+        .remote(url: "https://github.com/pointfreeco/swift-navigation", requirement: .upToNextMajor(from: "2.3.0")),
+        .remote(url: "https://github.com/pointfreeco/swift-case-paths", requirement: .upToNextMajor(from: "1.7.0")),
+        .remote(url: "https://github.com/pointfreeco/swift-custom-dump", requirement: .upToNextMajor(from: "1.3.3")),
+        .remote(url: "https://github.com/pointfreeco/swift-identified-collections", requirement: .upToNextMajor(from: "1.1.1")),
+        .remote(url: "https://github.com/pointfreeco/swift-dependencies", requirement: .upToNextMajor(from: "1.9.2")),
+        .remote(url: "https://github.com/pointfreeco/swift-clocks", requirement: .upToNextMajor(from: "1.0.0")),
+        .remote(url: "https://github.com/pointfreeco/combine-schedulers", requirement: .upToNextMajor(from: "1.0.0")),
+        .remote(url: "https://github.com/krzysztofzablocki/Inject", requirement: .upToNextMajor(from: "1.5.2"))
+    ],
+    settings: .settings(
+        base: [
+            "SWIFT_VERSION": "5.0",
+            "CLANG_ENABLE_MODULES": "YES",
+            "SWIFT_ACTIVE_COMPILATION_CONDITIONS": "DEBUG",
+            "SWIFT_OPTIMIZATION_LEVEL": "-Onone",
+            "SWIFT_INSTALL_OBJC_HEADER": "YES",
+            "SWIFT_OBJC_INTERFACE_HEADER_NAME": "",
+            "SWIFT_OBJC_BRIDGING_HEADER": "",
+            "MACH_O_TYPE": "mh_dylib",
+            "DEFINES_MODULE": "YES",
+            "IPHONEOS_DEPLOYMENT_TARGET": "16.0",
+            "TARGETED_DEVICE_FAMILY": "1,2",
+            "SUPPORTS_MACCATALYST": "NO",
+            "SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD": "NO"
+        ],
+        debug: [
+            "SWIFT_COMPILATION_MODE": "singlefile",
+            "EMIT_FRONTEND_COMMAND_LINES": "true",
+            "OTHER_SWIFT_FLAGS": ["-Xfrontend", "-serialize-debugging-options"],
+            "OTHER_LDFLAGS": [
+                "$(inherited)",
+                "-Xlinker",
+                "-interposable"
+            ],
+            "INJECTION_STANDALONE": "true",
+            "ENABLE_USER_SCRIPT_SANDBOXING": "true",
+            "ENABLE_MODULE_VERIFIER": "true"
+        ]
+    ),
+    targets: [
+        Target.target(
+            name: "{{ name }}",
+            destinations: .iOS,
+            product: .staticFramework,
+            bundleId: "com.grahamhindle.{{ name }}",
+            infoPlist: .default,
+            sources: ["{{ name }}/Sources/**"],
+            resources: ["{{ name }}/Resources/**"],
+            dependencies: [
+                .package(product: "ComposableArchitecture"),
+                .package(product: "SwiftNavigation"),
+                .package(product: "CasePaths"),
+                .package(product: "CustomDump"),
+                .package(product: "IdentifiedCollections"),
+                .package(product: "Dependencies"),
+                .package(product: "Clocks"),
+                .package(product: "CombineSchedulers"),
+                .package(product: "Inject")
+            ],
+            settings: .settings(
+                base: [
+                    "SWIFT_INSTALL_OBJC_HEADER": "YES",
+                    "SWIFT_OBJC_INTERFACE_HEADER_NAME": "{{ name }}-Swift.h",
+                    "SWIFT_OBJC_BRIDGING_HEADER": "",
+                    "DEFINES_MODULE": "YES"
+                ]
+            )
+        ),
+        Target.target(
+            name: "{{ name }}Tests",
+            destinations: .iOS,
+            product: .unitTests,
+            bundleId: "com.grahamhindle.{{ name }}Tests",
+            infoPlist: .default,
+            sources: ["{{ name }}/Tests/**"],
+            dependencies: [
+                .target(name: "{{ name }}"),
+                .package(product: "XCTestDynamicOverlay")
+            ],
+            settings: .settings(
+                base: [
+                    "ENABLE_MODULE_VERIFIER": "NO",
+                    "SWIFT_ACTIVE_COMPILATION_CONDITIONS": "DEBUG",
+                    "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES": "YES",
+                    "MACH_O_TYPE": "mh_bundle",
+                    "OTHER_LDFLAGS": ["$(inherited)"]
+                ]
+            )
+        )
+    ]
+) 

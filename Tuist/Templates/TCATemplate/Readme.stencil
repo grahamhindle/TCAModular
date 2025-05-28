@@ -1,0 +1,24 @@
+
+
+##  {{ name }}View.swift
+-  {{ name }}
+
+--  Created by {{ author }} on {{ date }}.
+--  Copyright © {{ year }} {{ company }}. All rights reserved.
+
+
+## Overview
+This module contains the {{ name }} feature implementation.
+
+## Architecture
+- Uses SwiftUI for UI
+- Follows TCA (The Composable Architecture) patterns
+- Supports hot reloading in debug builds
+
+## Dependencies
+- ComposableArchitecture
+- Inject (Debug only)
+
+## Testing
+Run tests using:
+

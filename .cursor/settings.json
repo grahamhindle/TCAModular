@@ -1,0 +1,28 @@
+{
+    "swift": {
+        "enableSourceKit": true,
+        "useXcodeSDK": true,
+        "targets": [
+            "Main",
+            "Networking",
+            "Root"
+        ],
+        "packages": [
+            "Alamofire",
+            "Inject",
+            "InjectionNext",
+            "ComposableArchitecture",
+            "Algorithms"
+        ]
+    },
+    "workbench.colorCustomizations": {
+        "editor.selectionBackground": "#135564",
+        "editor.selectionHighlightBackground": "#135564",
+        "editor.lineHighlightBackground": "#135564",
+        "editor.lineHighlightBorder": "#135564",
+        "editor.hoverHighlightBackground": "#135564",
+        "editor.hoverHighlightBorder": "#135564",
+        "editor.wordHighlightBackground": "#135564",
+        "editor.wordHighlightStrongBackground": "#135564"
+    }
+}

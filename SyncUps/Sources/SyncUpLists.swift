@@ -73,14 +73,13 @@ public struct SyncUpsListView: View {
 
     public var body: some View {
         List {
-            ForEach(store.syncUps) { syncUp in
-                Button {} label: {
+            ForEach(Array(store.$syncUps)) { $syncUp in
+                NavigationLink(
+                    state: AppFeature.Path.State.detail(SyncUpDetail.State(syncUp: $syncUp))
+                ) {
                     CardView(syncUp: syncUp)
                 }
                 .listRowBackground(syncUp.theme.mainColor)
-            }
-            .onDelete { indexSet in
-                store.send(.onDelete(indexSet))
             }
         }
         .sheet(item: $store.scope(state: \.addSyncUp, action: \.addSyncUp)) { addSyncUpStore in
@@ -157,7 +156,7 @@ public extension LabelStyle where Self == TrailingIconLabelStyle {
                 SyncUpsList()
                     ._printChanges()
             }
-            //.withTestShared(\SyncUpsList.State.syncUps, value: IdentifiedArrayOf<SyncUp>([SyncUp.mock]))
+            // .withTestShared(\SyncUpsList.State.syncUps, value: IdentifiedArrayOf<SyncUp>([SyncUp.mock]))
         )
     }
 }
